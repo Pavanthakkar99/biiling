@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "768193408715",
+    "project_id": "smart-billing-bfbaf",
+    "storage_bucket": "smart-billing-bfbaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768193408715:android:1d3fa52cd8f2f3b2c9b54e",
+        "android_client_info": {
+          "package_name": "com.example.smartbilling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768193408715-h8j14b6fjf18jqgoglrluk2nq957v61m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB46bHE23wlHAySZ9KbM_prR3k0GppNCrI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768193408715-h8j14b6fjf18jqgoglrluk2nq957v61m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
