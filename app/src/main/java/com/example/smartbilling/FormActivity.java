@@ -3,6 +3,7 @@ package com.example.smartbilling;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,8 @@ public class FormActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
     FirebaseDatabase database;
+    String previosMeterReadingStr;
+    int previosMeterReadingInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class FormActivity extends AppCompatActivity {
         auth=FirebaseAuth.getInstance();
         firebaseDatabase= FirebaseDatabase.getInstance();
         String userId=auth.getCurrentUser().getUid();
-        databaseReference=firebaseDatabase.getReference("meter").child(userId).child(currentDate.toString());
+        databaseReference=firebaseDatabase.getReference("meter").child(userId);
 
         DatabaseReference databaseReference1=databaseReference.child("ReadingPoint");
        // databaseReference1=databaseReference.child("name");
@@ -68,6 +71,44 @@ public class FormActivity extends AppCompatActivity {
         DatabaseReference finalDatabaseReference1 = databaseReference1;
         DatabaseReference finalDatabaseReference2 = databaseReference1;
 
+//        DatabaseReference databaseReference3=databaseReference.child("meter");
+        Query query =databaseReference.limitToLast(1);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int orgnal=0;
+                int dataa=0;
+                String vala;
+                try {
+
+
+                Map<String, Object> objectMap = (HashMap<String, Object>)
+                        dataSnapshot.getValue();
+                for (Object obj : objectMap.values()){
+                    if (obj instanceof Map) {
+                        Map<String, Object> mapObj = (Map<String, Object>) obj;
+                        Log.d("Value is from first : ", " " +mapObj.get("readingPoint"));
+                        previosMeterReadingStr=mapObj.get("readingPoint").toString();
+                        previosMeterReadingInt=Integer.parseInt(previosMeterReadingStr);
+//                        vala=mapObj.get("readingPoint").toString();
+//                        int valuees=Integer.parseInt(vala);
+//                        dataa-=-valuees;
+                    }
+                } }catch (Exception e)
+                {
+
+                }
+//                        Log.d("Value is from first : ", " "+dataa);
+
+//                        Log.d("orignal : ", " "+ vala);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,56 +116,34 @@ public class FormActivity extends AppCompatActivity {
                 String meterId1 = meterId.getText().toString();
                 String contactNo1 = contactNo.getText().toString();
                 String readingId1 = readingPoint.getText().toString();
+                String userNAme=localStorage.getInstance(getApplicationContext()).getUserName();
 
                 MeterReading meterReading = new MeterReading();
                 meterReading.setMeterId(meterId1);
                 meterReading.setContactNo(contactNo1);
                 meterReading.setReadingPoint(readingId1);
+                meterReading.setDate(currentDate.toString());
                 meterReading.setUserName(localStorage.getInstance(getApplicationContext()).getUserName().toString());
                 meterReading.setUserId(auth.getUid());
-                Log.d(auth.getUid(), "getUid");
-                meterReading.setUserName(firebaseUser.getDisplayName());
-
                 databaseReference.push().setValue(meterReading);
 
+                Log.d(auth.getUid(), "getUid");
+                meterReading.setUserName(userNAme);
+                int currenReadingPonint=Integer.parseInt(readingId1);
+                int finalReadingPoint= currenReadingPonint- previosMeterReadingInt;
+                Log.d("finalPoint:",""+finalReadingPoint);
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Map<String, Object> objectMap = (HashMap<String, Object>)
-                                dataSnapshot.getValue();
-                        for (Object obj : objectMap.values()) {
-                            if (obj instanceof Map) {
-                                Map<String, Object> mapObj = (Map<String, Object>) obj;
+                Intent intent=new Intent(FormActivity.this,BillGenrateActivity.class);
 
-                                Log.d("Value is: ", " " + mapObj);
+                String meterIds=localStorage.getInstance(getApplicationContext()).getMeterId();
+                intent.putExtra("userName",userNAme);
+                intent.putExtra("meterId",meterIds);
+                intent.putExtra("currentUnit",readingId1);
+                intent.putExtra("previousUnit",String.valueOf(previosMeterReadingInt));
+                intent.putExtra("usedUnit",String.valueOf(finalReadingPoint));
+                intent.putExtra("billDate",currentDate.toString());
+                   startActivity(intent);
 
-                            }
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-                Query query =databaseReference.limitToLast(1);
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        Log.d("Value is: ", " " + dataSnapshot.getValue());
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
 
 
             };

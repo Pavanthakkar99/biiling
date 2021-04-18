@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Bill"
+        android:textAlignment="center"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/socityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Socity name"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="username"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/socityName" />
+    <TextView
+        android:id="@+id/userMeterId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="meter ID"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
+    <TextView
+        android:id="@+id/currentUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="current Unit"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userMeterId" />
+    <TextView
+        android:id="@+id/previosUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="previos unit"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentUnit" />
+    <TextView
+        android:id="@+id/usedUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="used unit"
+        android:textSize="18sp"
+
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/previosUnit" />
+    <TextView
+        android:id="@+id/unitPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unit Price"
+        android:textSize="18sp"
+
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usedUnit" />
+    <TextView
+        android:id="@+id/mantense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unit Price"
+        android:textStyle="bold"
+        android:textSize="18sp"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unitPrice" />
+    <TextView
+        android:id="@+id/totalBill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="totolBill"
+
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mantense" />
+
+    <Button
+        android:id="@+id/genrateBill"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Genrate Bill"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />z
+
+</androidx.constraintlayout.widget.ConstraintLayout>

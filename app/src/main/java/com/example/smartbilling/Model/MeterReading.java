@@ -1,14 +1,22 @@
 package com.example.smartbilling.Model;
 
+import java.util.Date;
+
 public class MeterReading {
     String meterId;
     String contactNo;
-
-
-
     String readingPoint;
     String userName;
+    String date;
     String userId;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getUserName() {
         return userName;
