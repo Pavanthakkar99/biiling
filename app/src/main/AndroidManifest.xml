@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartBilling">
-        <activity android:name=".BillGenrateActivity"></activity>
-        <activity android:name=".FormActivity"></activity>
+        <activity android:name=".ElectricityMyBills"></activity>
+        <activity android:name=".BillGenrateActivity" />
+        <activity android:name=".FormActivity" />
         <activity
             android:name=".DashboardNavigationActivity"
             android:label="@string/title_activity_dashboard_navigation"

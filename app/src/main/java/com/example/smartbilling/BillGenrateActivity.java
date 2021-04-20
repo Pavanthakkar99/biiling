@@ -1,17 +1,26 @@
 package com.example.smartbilling;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.smartbilling.Model.MeterBill;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BillGenrateActivity extends AppCompatActivity {
 
@@ -20,6 +29,9 @@ public class BillGenrateActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
     FirebaseAuth auth;
+    DatabaseReference databaseReference;
+    int meterunitPrice,maintance;
+    String socityNAMEs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +51,49 @@ public class BillGenrateActivity extends AppCompatActivity {
         firebaseDatabase= FirebaseDatabase.getInstance();
         String userId=auth.getCurrentUser().getUid();
         myRef=firebaseDatabase.getReference("MetersBillList").child(userId);
+        databaseReference=firebaseDatabase.getReference("Admin");
 
+        Query query =databaseReference.limitToLast(1);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    Map<String, Object> objectMap = (HashMap<String, Object>)
+                            dataSnapshot.getValue();
+                    for (Object obj : objectMap.values()){
+                        if (obj instanceof Map) {
+                            Map<String, Object> mapObj = (Map<String, Object>) obj;
+                            Log.d("Value is from meter :",mapObj.get("meter").toString()+" "+mapObj.get("mantaines").toString());
+                            String meterStr=mapObj.get("meter").toString();
+                            String mainStr=mapObj.get("mantaines").toString();
+                            socityNAMEs=mapObj.get("societyName").toString();
+
+                            meterunitPrice=Integer.parseInt(meterStr);
+                            maintance=Integer.parseInt(mainStr);
+                            System.out.print(meterunitPrice);
+                            System.out.print(maintance);
+
+                        }
+                    } }catch (Exception e)
+                {
+
+                }
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         Intent intent = getIntent();
         int usedUnitint = Integer.parseInt(intent.getStringExtra("usedUnit"));
-        int unitPriceInt = 20;
-        int mantenseInt = 500;
+        int unitPriceInt = meterunitPrice;
+        int mantenseInt = maintance;
+        Log.d("onCreate: ",meterunitPrice+" "+maintance);
         int TotalBillInt = usedUnitint * unitPriceInt + mantenseInt;
 
-        String socityName = "Socity Name: " + "Karnavati bunglose";
+        String socityName = "Socity Name: " + socityNAMEs;
         String username = "User Name:: " + intent.getStringExtra("userName");
         String usermeterID = "Meter Id: " + intent.getStringExtra("meterId");
         String currentunit = "Current Unit: " + intent.getStringExtra("currentUnit");

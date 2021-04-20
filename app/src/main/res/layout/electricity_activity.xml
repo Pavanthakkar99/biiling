@@ -8,8 +8,6 @@
 
 
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/meterRecyclerView"
         android:layout_width="match_parent"
