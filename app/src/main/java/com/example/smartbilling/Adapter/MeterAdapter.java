@@ -39,8 +39,8 @@ public class MeterAdapter extends RecyclerView.Adapter<MeterAdapter.myViewHolder
 
         MeterBill meterBill=meterBillList.get(position);
         holder.billDate.setText(meterBill.getBillDate());
-        holder.usedUnit.setText(meterBill.getUsedunit());
-        holder.totalBill.setText(meterBill.getTotalbill());
+        holder.usedUnit.setText("Used Unit:"+meterBill.getUsedunit());
+        holder.totalBill.setText("Total Bill:"+meterBill.getTotalbill());
         holder.MakePayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

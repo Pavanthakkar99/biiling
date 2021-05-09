@@ -32,14 +32,15 @@ public class FormActivity extends AppCompatActivity {
     EditText meterId,contactNo,readingPoint;
     FirebaseAuth auth;
     Button submitBtn;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference11;
     FirebaseUser firebaseUser;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
     FirebaseDatabase database;
     String previosMeterReadingStr;
     int previosMeterReadingInt;
-
+    int meterunitPrice,maintance;
+    String socityNAMEs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +109,39 @@ public class FormActivity extends AppCompatActivity {
 
             }
         });
+        databaseReference11=firebaseDatabase.getReference("Admin");
+        Query query1 =databaseReference11.limitToLast(1);
+        query1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    Map<String, Object> objectMap = (HashMap<String, Object>)
+                            dataSnapshot.getValue();
+                    for (Object obj : objectMap.values()){
+                        if (obj instanceof Map) {
+                            Map<String, Object> mapObj = (Map<String, Object>) obj;
+                            Log.d("Value is from meter :",mapObj.get("meter").toString()+" "+mapObj.get("mantaines").toString());
+                            String meterStr=mapObj.get("meter").toString();
+                            String mainStr=mapObj.get("mantaines").toString();
+                            socityNAMEs=mapObj.get("societyName").toString();
+                            meterunitPrice=Integer.parseInt(meterStr);
+                            maintance=Integer.parseInt(mainStr);
+                            System.out.print(meterunitPrice);
+                            System.out.print(maintance);
 
+                        }
+                    } }catch (Exception e)
+                {
+
+                }
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +175,9 @@ public class FormActivity extends AppCompatActivity {
                 intent.putExtra("previousUnit",String.valueOf(previosMeterReadingInt));
                 intent.putExtra("usedUnit",String.valueOf(finalReadingPoint));
                 intent.putExtra("billDate",currentDate.toString());
+                intent.putExtra("societyName",socityNAMEs);
+                intent.putExtra("unitPrice",String.valueOf(meterunitPrice));
+                intent.putExtra("mantance",String.valueOf(maintance));
                    startActivity(intent);
 
 

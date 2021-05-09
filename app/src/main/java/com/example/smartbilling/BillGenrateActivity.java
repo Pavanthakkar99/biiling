@@ -88,20 +88,21 @@ public class BillGenrateActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         int usedUnitint = Integer.parseInt(intent.getStringExtra("usedUnit"));
-        int unitPriceInt = meterunitPrice;
-        int mantenseInt = maintance;
+        int unitPriceInt = Integer.parseInt(intent.getStringExtra("unitPrice"));
+        int mantenseInt = Integer.parseInt(intent.getStringExtra("mantance"));
         Log.d("onCreate: ",meterunitPrice+" "+maintance);
         int TotalBillInt = usedUnitint * unitPriceInt + mantenseInt;
 
-        String socityName = "Socity Name: " + socityNAMEs;
+        String socityName = "Socity Name: " + intent.getStringExtra("societyName");
         String username = "User Name:: " + intent.getStringExtra("userName");
         String usermeterID = "Meter Id: " + intent.getStringExtra("meterId");
         String currentunit = "Current Unit: " + intent.getStringExtra("currentUnit");
         String previousunit = "Previos Unit: " + intent.getStringExtra("previousUnit");
         String usedunit = "Used Unit: " + usedUnitint;
-        String unitprice = "Unit Price: " + String.valueOf(unitPriceInt);
-        String meantense = "Mantance: " + String.valueOf(mantenseInt);
-        String totalbill = "Total Bill: " + String.valueOf(TotalBillInt);
+        String unitprice = "Unit Price: " + intent.getStringExtra("unitPrice");
+        String meantense = "Mantance: " + intent.getStringExtra("mantance");
+        String totalbill = "Total Bill: " + TotalBillInt;
+
         SocityName.setText(socityName);
         userName.setText(username);
         userMeterId.setText(usermeterID);
